@@ -123,6 +123,31 @@ weight: long
 	}
 }
 
+func TestBasicUsageTypeConversion(t *testing.T) {
+
+	var schemeYaml = `
+int32: int
+float32: float
+float64: double
+`
+	s, err := YamlToScheme(schemeYaml)
+	require.Nil(t, err)
+	b := NewBuffer(s)
+
+	// Using int32 is ok
+
+	b.Set("quantity", int32(32))
+	_, err = b.ToBytes()
+	require.Nil(t, err)
+
+	// Using int16 gives an error
+
+	b.Set("quantity", int16(16))
+	_, err = b.ToBytes()
+	require.NotNil(t, err)
+
+}
+
 var schemeStr = `
 name: string
 price: float
