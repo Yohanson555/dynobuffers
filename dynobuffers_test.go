@@ -136,15 +136,21 @@ float64: double
 
 	// Using int32 is ok
 
-	b.Set("quantity", int32(32))
+	b.Set("int32", int32(32))
 	_, err = b.ToBytes()
 	require.Nil(t, err)
 
-	// Using int16 gives an error
+	// Using int16
 
-	b.Set("quantity", int16(16))
+	b.Set("int32", int16(16))
 	_, err = b.ToBytes()
 	require.NotNil(t, err)
+
+	// Using int(int16)
+
+	b.Set("int32", int(int16(16)))
+	_, err = b.ToBytes()
+	require.Nil(t, err)
 
 }
 
